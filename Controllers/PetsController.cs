@@ -19,35 +19,22 @@ namespace pet_hotel.Controllers
             _context = context;
         }
 
-        // This is just a stub for GET / to prevent any weird frontend errors that 
-        // occur when the route is missing in this controller
+
         [HttpGet]
         public IEnumerable<Pet> GetPets() {
-            return new List<Pet>();
+            return _context.Pets.Include(pet => pet.ownedBy);
         }
 
-        // [HttpGet]
-        // [Route("test")]
-        // public IEnumerable<Pet> GetPets() {
-        //     PetOwner blaine = new PetOwner{
-        //         name = "Blaine"
-        //     };
+ [HttpPost]
+    public Pet Post(Pet pet) 
+    {
+        // Tell the DB context about our new bread object
+        _context.Add(pet);
+        // ...and save the bread object to the database
+        _context.SaveChanges();
 
-        //     Pet newPet1 = new Pet {
-        //         name = "Big Dog",
-        //         petOwner = blaine,
-        //         color = PetColorType.Black,
-        //         breed = PetBreedType.Poodle,
-        //     };
-
-        //     Pet newPet2 = new Pet {
-        //         name = "Little Dog",
-        //         petOwner = blaine,
-        //         color = PetColorType.Golden,
-        //         breed = PetBreedType.Labrador,
-        //     };
-
-        //     return new List<Pet>{ newPet1, newPet2};
-        // }
+        // Respond back with the created bread object
+        return pet;
+    }
     }
 }

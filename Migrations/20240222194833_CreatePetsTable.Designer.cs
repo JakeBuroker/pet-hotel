@@ -11,8 +11,8 @@ using pet_hotel.Models;
 namespace pet_hotel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240222171103_CreatePetTable")]
-    partial class CreatePetTable
+    [Migration("20240222194833_CreatePetsTable")]
+    partial class CreatePetsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace pet_hotel.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
+                    b.Property<int>("PetOwnerId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("checkedIn")
                         .HasColumnType("boolean");
 
@@ -44,32 +47,47 @@ namespace pet_hotel.Migrations
                     b.Property<int>("petColorType")
                         .HasColumnType("integer");
 
-                    b.Property<int>("petOwner")
-                        .HasColumnType("integer");
-
                     b.HasKey("id");
+
+                    b.HasIndex("PetOwnerId");
 
                     b.ToTable("Pets");
                 });
 
             modelBuilder.Entity("pet_hotel.PetOwner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Email")
+                    b.Property<string>("email")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Owners");
+                });
+
+            modelBuilder.Entity("pet_hotel.Pet", b =>
+                {
+                    b.HasOne("pet_hotel.PetOwner", "ownedBy")
+                        .WithMany("Pets")
+                        .HasForeignKey("PetOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ownedBy");
+                });
+
+            modelBuilder.Entity("pet_hotel.PetOwner", b =>
+                {
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

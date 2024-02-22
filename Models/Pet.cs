@@ -26,9 +26,15 @@ namespace pet_hotel
     public class Pet {
         public int id {get; set;}
         public string name {get; set;}
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PetBreedType petBreedType {get; set;}
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PetColorType petColorType {get; set;}
         public bool checkedIn {get; set;}
-        public int petOwner {get; set;}
+
+        [ForeignKey("ownedBy")]
+        public int PetOwnerId {get; set;}
+       public PetOwner ownedBy { get; set; }
     }
 }
