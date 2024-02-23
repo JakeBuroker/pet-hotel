@@ -35,5 +35,33 @@ namespace pet_hotel.Controllers
 
         return pet;
     }
+    
+    
+      [HttpPut("{id}")]
+    public Pet Put(int id, Pet pet) 
+    {
+        
+       pet.id = id;
+
+        _context.Update(pet);
+ 
+        _context.SaveChanges();
+
+        return pet;
+    }
+
+       // DELETE /api/breads/:id
+    [HttpDelete("{id}")]
+    public void Delete(int id) 
+    {
+        // Find the bread, by ID
+        Pet pet = _context.Pets.Find(id);
+
+        // Tell the DB that we want to remove this bread
+        _context.Pets.Remove(pet);
+
+        // ...and save the changes to the database
+        _context.SaveChanges();;
+    }
     }
 }
