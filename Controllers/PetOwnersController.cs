@@ -15,13 +15,11 @@ namespace pet_hotel.Controllers
         public PetOwnersController(ApplicationContext context) {
             _context = context;
         }
-
-        // This is just a stub for GET / to prevent any weird frontend errors that 
-        // occur when the route is missing in this controller
+        
       [HttpGet]
     public IEnumerable<PetOwner> GetOwners() 
     {
-              return _context.Owners;
+              return _context.PetOwners;
 
     }
     }

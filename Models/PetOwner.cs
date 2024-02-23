@@ -12,7 +12,6 @@ public class PetOwner
     public string name { get; set; }
     public string email { get; set; }
 
-    // Navigation property
+    [JsonIgnore]
     public List<Pet> Pets { get; set; }
 }
-

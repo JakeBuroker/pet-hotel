@@ -5,7 +5,7 @@
 namespace pet_hotel.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateOwnersTable : Migration
+    public partial class CreatePetsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

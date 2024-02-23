@@ -28,12 +28,11 @@ namespace pet_hotel.Controllers
  [HttpPost]
     public Pet Post(Pet pet) 
     {
-        // Tell the DB context about our new bread object
+        // Tell the DB context about our new object
         _context.Add(pet);
-        // ...and save the bread object to the database
+        // ...and save the object to the database
         _context.SaveChanges();
 
-        // Respond back with the created bread object
         return pet;
     }
     }

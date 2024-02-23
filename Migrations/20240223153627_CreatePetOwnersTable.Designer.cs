@@ -11,8 +11,8 @@ using pet_hotel.Models;
 namespace pet_hotel.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240222194841_CreateOwnersTable")]
-    partial class CreateOwnersTable
+    [Migration("20240223153627_CreatePetOwnersTable")]
+    partial class CreatePetOwnersTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,14 +32,14 @@ namespace pet_hotel.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<int>("PetOwnerId")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("checkedIn")
                         .HasColumnType("boolean");
 
                     b.Property<string>("name")
                         .HasColumnType("text");
+
+                    b.Property<int>("ownedById")
+                        .HasColumnType("integer");
 
                     b.Property<int>("petBreedType")
                         .HasColumnType("integer");
@@ -49,7 +49,7 @@ namespace pet_hotel.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("PetOwnerId");
+                    b.HasIndex("ownedById");
 
                     b.ToTable("Pets");
                 });
@@ -71,14 +71,14 @@ namespace pet_hotel.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Owners");
+                    b.ToTable("PetOwners");
                 });
 
             modelBuilder.Entity("pet_hotel.Pet", b =>
                 {
                     b.HasOne("pet_hotel.PetOwner", "ownedBy")
                         .WithMany("Pets")
-                        .HasForeignKey("PetOwnerId")
+                        .HasForeignKey("ownedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

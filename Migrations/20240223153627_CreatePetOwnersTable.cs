@@ -6,13 +6,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace pet_hotel.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatePetsTable : Migration
+    public partial class CreatePetOwnersTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Owners",
+                name: "PetOwners",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
@@ -22,7 +22,7 @@ namespace pet_hotel.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Owners", x => x.id);
+                    table.PrimaryKey("PK_PetOwners", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,23 +35,23 @@ namespace pet_hotel.Migrations
                     petBreedType = table.Column<int>(type: "integer", nullable: false),
                     petColorType = table.Column<int>(type: "integer", nullable: false),
                     checkedIn = table.Column<bool>(type: "boolean", nullable: false),
-                    PetOwnerId = table.Column<int>(type: "integer", nullable: false)
+                    ownedById = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pets", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Pets_Owners_PetOwnerId",
-                        column: x => x.PetOwnerId,
-                        principalTable: "Owners",
+                        name: "FK_Pets_PetOwners_ownedById",
+                        column: x => x.ownedById,
+                        principalTable: "PetOwners",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pets_PetOwnerId",
+                name: "IX_Pets_ownedById",
                 table: "Pets",
-                column: "PetOwnerId");
+                column: "ownedById");
         }
 
         /// <inheritdoc />
@@ -61,7 +61,7 @@ namespace pet_hotel.Migrations
                 name: "Pets");
 
             migrationBuilder.DropTable(
-                name: "Owners");
+                name: "PetOwners");
         }
     }
 }
