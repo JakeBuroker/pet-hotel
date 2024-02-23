@@ -22,5 +22,18 @@ namespace pet_hotel.Controllers
               return _context.PetOwners;
 
     }
+           // DELETE /api/breads/:id
+    [HttpDelete("{id}")]
+    public void Delete(int id) 
+    {
+        // Find the bread, by ID
+        PetOwner petOwner = _context.PetOwners.Find(id);
+
+        // Tell the DB that we want to remove this bread
+        _context.PetOwners.Remove(petOwner);
+
+        // ...and save the changes to the database
+        _context.SaveChanges();;
+    }
     }
 }
